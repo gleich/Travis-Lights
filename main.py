@@ -26,7 +26,9 @@ def main():
     repo_number = 0
     while True:
         for repo_id in repo_ids:
+            print(repo_id)
             for GPIO_map2 in GPIO_maps:
+                print(GPIO_map2)
                 repo_number += 1
                 if repo_number == 4:
                     repo_number -= 4
