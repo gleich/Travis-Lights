@@ -8,7 +8,7 @@ def main():
     """
     Run main
     """
-    GPIO.setup(GPIO.BCM)
+    GPIO.setmode(GPIO.BCM)
     with open("repo_ids.json") as repo_ids_json:
         repo_ids = load(repo_ids_json)
     with open("GPIO.json") as GPIO_json:
