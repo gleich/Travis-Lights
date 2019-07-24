@@ -23,6 +23,7 @@ def main():
     while True:
         for i in range(len(repo_ids)):
             last_build_result = ta.get_build_repo_status(repo_ids[i])
+            print(repo_ids[i])
             print(last_build_result)
             if last_build_result == 0:
                 gpio_config.output(gpio_maps[i][0], gpio_config.HIGH)
