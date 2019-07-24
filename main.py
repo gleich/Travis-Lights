@@ -8,15 +8,15 @@ def main():
     """
     Run main
     """
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(GPIO.BCM)
     with open("repo_ids.json") as repo_ids_json:
         repo_ids = load(repo_ids_json)
     with open("GPIO.json") as GPIO_json:
         GPIO_maps = load(GPIO_json)
     total_pin = []
     for GPIO_map in GPIO_maps:
-        for GPIO in GPIO_map:
-            total_pin.append(GPIO)
+        for GPIO_PIN in GPIO_map:
+            total_pin.append(GPIO_PIN)
     for pin in total_pin:
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, GPIO.HIGH)
