@@ -22,13 +22,29 @@ def main():
         GPIO.output(pin, GPIO.HIGH)
         sleep(0.50)
         GPIO.output(pin, GPIO.LOW)
-    repo_one_color = ""
-    repo_two_color = ""
-    repo_three_color = ""
-    repo_four_color = ""
-    for repo_id in repo_ids:
-        for GPIO_map in GPIO_maps:
-            build_status = ta.get_build_repo_status(repo_id)
-
+    colors = ["", "", "", ""]
+    while True:
+        repo_number = 0
+        for repo_id in repo_ids:
+            for GPIO_map in GPIO_maps:
+                repo_number += 1
+                if repo_number == 4:
+                    repo_number = 0
+                build_status = ta.get_build_repo_status(repo_id)
+                if build_status == 0 and colors[repo_number] != "green":
+                    colors[repo_number] = "green"
+                    GPIO.output(GPIO_map[0], GPIO.HIGH)
+                    GPIO.output(GPIO_map[1], GPIO.LOW)
+                    GPIO.output(GPIO_map[2], GPIO.LOW)
+                elif build_status == 1 and colors[repo_number] != "red":
+                    colors[repo_number] = "red"
+                    GPIO.output(GPIO_map[0], GPIO.LOW)
+                    GPIO.output(GPIO_map[1], GPIO.LOW)
+                    GPIO.output(GPIO_map[2], GPIO.HIGH)
+                elif build_status == None and colors[repo_number] != "yellow":
+                    colors[repo_number] = "yellow"
+                    GPIO.output(GPIO_map[0], GPIO.LOW)
+                    GPIO.output(GPIO_map[1], GPIO.HIGH)
+                    GPIO.output(GPIO_map[2], GPIO.LOW)
 
 main()
