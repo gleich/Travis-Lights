@@ -1,53 +1,47 @@
-from json import load
-import RPi.GPIO as GPIO
 from time import sleep
+from json import load
+import RPi.GPIO as gpio_config
 
 import travis_API as ta
 
+
 def main():
     """
-    Run main
+    Runs the main functions, the whole program
     """
-    GPIO.setmode(GPIO.BCM)
-    with open("repo_ids.json") as repo_ids_json:
-        repo_ids = load(repo_ids_json)
-    with open("GPIO.json") as GPIO_json:
-        GPIO_maps = load(GPIO_json)
-    total_pin = []
-    for GPIO_map in GPIO_maps:
-        for GPIO_PIN in GPIO_map:
-            total_pin.append(GPIO_PIN)
-    for pin in total_pin:
-        GPIO.setup(pin, GPIO.OUT)
-        GPIO.output(pin, GPIO.HIGH)
-        sleep(0.4)
-        GPIO.output(pin, GPIO.LOW)
-    colors = ["", "", "", ""]
-    repo_number = 0
-    while True:
-        for repo_id in repo_ids:
-            print(repo_id)
-            for GPIO_map2 in GPIO_maps:
-                print(GPIO_map2)
-                repo_number += 1
-                if repo_number == 4:
-                    repo_number -= 4
-                build_status = ta.get_build_repo_status(repo_id)
-                if build_status == 0 and colors[repo_number] != "green":
-                    colors[repo_number] = "green"
-                    GPIO.output(GPIO_map2[0], GPIO.HIGH)
-                    GPIO.output(GPIO_map2[1], GPIO.LOW)
-                    GPIO.output(GPIO_map2[2], GPIO.LOW)
-                elif build_status == None and colors[repo_number] != "yellow":
-                    colors[repo_number] = "yellow"
-                    GPIO.output(GPIO_map2[0], GPIO.LOW)
-                    GPIO.output(GPIO_map2[1], GPIO.HIGH)
-                    GPIO.output(GPIO_map2[2], GPIO.LOW)
-                else:
-                    colors[repo_number] = "red"
-                    GPIO.output(GPIO_map2[0], GPIO.LOW)
-                    GPIO.output(GPIO_map2[1], GPIO.LOW)
-                    GPIO.output(GPIO_map2[2], GPIO.HIGH)
-                sleep(1)
+    gpio_config.setmode(gpio_config.BCM)
+    with open("repo_ids.json") as repo_ids_file:
+        repo_ids = load(repo_ids_file)
+    with open("GPIO.json") as gpio_file:
+        gpio_maps = load(gpio_file)
+    for gpio_map in gpio_maps:
+        for gpio_pin in gpio_map:
+            gpio_config.setup(gpio_pin, gpio_config.out)
+            gpio_config.output(gpio_pin, gpio_config.HIGH)
+            sleep(0.3)
+            gpio_config.output(gpio_pin, gpio_config.LOW)
+    last_colors = ["", "", "", ""]
+    for i in range(len(repo_ids)):
+        for gpio_map in gpio_maps:
+            last_build_result = ta.get_build_repo_status(repo_ids[i])
+            if last_build_result == 0 and last_colors[i] != "green":
+                last_colors[i] = "green"
+                gpio_config.output(gpio_map[0], gpio_config.HIGH)
+                gpio_config.output(gpio_map[1], gpio_config.LOW)
+                gpio_config.output(gpio_map[2], gpio_config.LOW)
+            elif last_build_result == 1 and last_colors[i] != "red":
+                last_colors[i] = "red"
+                gpio_config.output(gpio_map[0], gpio_config.LOW)
+                gpio_config.output(gpio_map[1], gpio_config.LOW)
+                gpio_config.output(gpio_map[2], gpio_config.HIGH)
+            elif last_build_result is None and last_colors[i] != "yellow":
+                last_colors[i] = "yellow"
+                gpio_config.output(gpio_map[0], gpio_config.LOW)
+                gpio_config.output(gpio_map[1], gpio_config.HIGH)
+                gpio_config.output(gpio_map[2], gpio_config.LOW)
+            else:
+                gpio_config.output(gpio_map[0], gpio_config.LOW)
+                gpio_config.output(gpio_map[1], gpio_config.LOW)
+                gpio_config.output(gpio_map[2], gpio_config.LOW)
 
-main()
+
