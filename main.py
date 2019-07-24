@@ -20,7 +20,7 @@ def main():
     for pin in total_pin:
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, GPIO.HIGH)
-        sleep(0.1)
+        sleep(0.2)
         GPIO.output(pin, GPIO.LOW)
     colors = ["", "", "", ""]
     repo_number = 0
