@@ -23,8 +23,7 @@ def get_build_repo_status(repo_id):
     resp = session.send(prepped)
     session.close()
     resp_json = json.loads(resp.content.decode("utf-8"))
-    print(resp_json)
     return resp_json["last_build_status"]
 
 # Testing:
-print(get_build_repo_status("goffstown-sports-app/Scrape-Calendar-Data"))
+# print(get_build_repo_status("goffstown-sports-app/Scrape-Calendar-Data"))
