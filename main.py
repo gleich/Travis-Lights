@@ -24,27 +24,27 @@ def main():
     while True:
         for i in range(len(repo_ids)):
             print(repo_ids[i])
-            for gpio_map in gpio_maps:
+            for i2 in range(len(gpio_maps)):
                 print(gpio_map)
                 last_build_result = ta.get_build_repo_status(repo_ids[i])
                 if last_build_result == 0 and last_colors[i] != "green":
                     last_colors[i] = "green"
-                    gpio_config.output(gpio_map[0], gpio_config.HIGH)
-                    gpio_config.output(gpio_map[1], gpio_config.LOW)
-                    gpio_config.output(gpio_map[2], gpio_config.LOW)
+                    gpio_config.output(gpio_maps[i2][0], gpio_config.HIGH)
+                    gpio_config.output(gpio_maps[i2][1], gpio_config.LOW)
+                    gpio_config.output(gpio_maps[i2][2], gpio_config.LOW)
                 elif last_build_result == 1 and last_colors[i] != "red":
                     last_colors[i] = "red"
-                    gpio_config.output(gpio_map[0], gpio_config.LOW)
-                    gpio_config.output(gpio_map[1], gpio_config.LOW)
-                    gpio_config.output(gpio_map[2], gpio_config.HIGH)
+                    gpio_config.output(gpio_maps[i2][0], gpio_config.LOW)
+                    gpio_config.output(gpio_maps[i2][1], gpio_config.LOW)
+                    gpio_config.output(gpio_maps[i2][2], gpio_config.HIGH)
                 elif last_build_result is None and last_colors[i] != "yellow":
                     last_colors[i] = "yellow"
-                    gpio_config.output(gpio_map[0], gpio_config.LOW)
-                    gpio_config.output(gpio_map[1], gpio_config.HIGH)
-                    gpio_config.output(gpio_map[2], gpio_config.LOW)
+                    gpio_config.output(gpio_maps[i2][0], gpio_config.LOW)
+                    gpio_config.output(gpio_maps[i2][1], gpio_config.HIGH)
+                    gpio_config.output(gpio_maps[i2][2], gpio_config.LOW)
                 else:
-                    gpio_config.output(gpio_map[0], gpio_config.LOW)
-                    gpio_config.output(gpio_map[1], gpio_config.LOW)
-                    gpio_config.output(gpio_map[2], gpio_config.LOW)
+                    gpio_config.output(gpio_maps[i2][0], gpio_config.LOW)
+                    gpio_config.output(gpio_maps[i2][1], gpio_config.LOW)
+                    gpio_config.output(gpio_maps[i2][2], gpio_config.LOW)
 
 main()
