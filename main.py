@@ -18,24 +18,20 @@ def main():
         for gpio_pin in gpio_map:
             gpio_config.setup(gpio_pin, gpio_config.OUT)
             gpio_config.output(gpio_pin, gpio_config.HIGH)
-            sleep(0.3)
+            sleep(0.2)
             gpio_config.output(gpio_pin, gpio_config.LOW)
-    last_colors = ["", "", "", ""]
     while True:
         for i in range(len(repo_ids)):
             last_build_result = ta.get_build_repo_status(repo_ids[i])
-            if last_build_result == 0 and last_colors[i] != "green":
-                last_colors[i] = "green"
+            if last_build_result == 0:
                 gpio_config.output(gpio_maps[i][0], gpio_config.HIGH)
                 gpio_config.output(gpio_maps[i][1], gpio_config.LOW)
                 gpio_config.output(gpio_maps[i][2], gpio_config.LOW)
-            elif last_build_result == 1 and last_colors[i] != "red":
-                last_colors[i] = "red"
+            elif last_build_result == 1:
                 gpio_config.output(gpio_maps[i][0], gpio_config.LOW)
                 gpio_config.output(gpio_maps[i][1], gpio_config.LOW)
                 gpio_config.output(gpio_maps[i][2], gpio_config.HIGH)
-            elif last_build_result is None and last_colors[i] != "yellow":
-                last_colors[i] = "yellow"
+            elif last_build_result is None:
                 gpio_config.output(gpio_maps[i][0], gpio_config.LOW)
                 gpio_config.output(gpio_maps[i][1], gpio_config.HIGH)
                 gpio_config.output(gpio_maps[i][2], gpio_config.LOW)
