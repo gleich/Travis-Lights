@@ -43,5 +43,3 @@ def main():
                 gpio_config.output(gpio_map[0], gpio_config.LOW)
                 gpio_config.output(gpio_map[1], gpio_config.LOW)
                 gpio_config.output(gpio_map[2], gpio_config.LOW)
-
-
