@@ -29,7 +29,7 @@ def main():
             for GPIO_map2 in GPIO_maps:
                 repo_number += 1
                 if repo_number == 4:
-                    repo_number = 0
+                    repo_number -= 4
                 build_status = ta.get_build_repo_status(repo_id)
                 print(build_status)
                 if build_status == 0 and colors[repo_number] != "green":
