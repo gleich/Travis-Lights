@@ -16,7 +16,7 @@ def main():
         gpio_maps = load(gpio_file)
     for gpio_map in gpio_maps:
         for gpio_pin in gpio_map:
-            gpio_config.setup(gpio_pin, gpio_config.out)
+            gpio_config.setup(gpio_pin, gpio_config.OUT)
             gpio_config.output(gpio_pin, gpio_config.HIGH)
             sleep(0.3)
             gpio_config.output(gpio_pin, gpio_config.LOW)
