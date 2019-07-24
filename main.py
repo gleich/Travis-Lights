@@ -26,7 +26,7 @@ def main():
     repo_number = 0
     while True:
         for repo_id in repo_ids:
-            for GPIO_map in GPIO_maps:
+            for GPIO_map2 in GPIO_maps:
                 repo_number += 1
                 if repo_number == 4:
                     repo_number = 0
@@ -34,19 +34,19 @@ def main():
                 print(build_status)
                 if build_status == 0 and colors[repo_number] != "green":
                     colors[repo_number] = "green"
-                    GPIO.output(GPIO_map[0], GPIO.HIGH)
-                    GPIO.output(GPIO_map[1], GPIO.LOW)
-                    GPIO.output(GPIO_map[2], GPIO.LOW)
+                    GPIO.output(GPIO_map2[0], GPIO.HIGH)
+                    GPIO.output(GPIO_map2[1], GPIO.LOW)
+                    GPIO.output(GPIO_map2[2], GPIO.LOW)
                 elif build_status == 1 and colors[repo_number] != "red":
                     colors[repo_number] = "red"
-                    GPIO.output(GPIO_map[0], GPIO.LOW)
-                    GPIO.output(GPIO_map[1], GPIO.LOW)
-                    GPIO.output(GPIO_map[2], GPIO.HIGH)
+                    GPIO.output(GPIO_map2[0], GPIO.LOW)
+                    GPIO.output(GPIO_map2[1], GPIO.LOW)
+                    GPIO.output(GPIO_map2[2], GPIO.HIGH)
                 elif build_status == None and colors[repo_number] != "yellow":
                     colors[repo_number] = "yellow"
-                    GPIO.output(GPIO_map[0], GPIO.LOW)
-                    GPIO.output(GPIO_map[1], GPIO.HIGH)
-                    GPIO.output(GPIO_map[2], GPIO.LOW)
-                sleep(3)
+                    GPIO.output(GPIO_map2[0], GPIO.LOW)
+                    GPIO.output(GPIO_map2[1], GPIO.HIGH)
+                    GPIO.output(GPIO_map2[2], GPIO.LOW)
+                sleep(1)
 
 main()
