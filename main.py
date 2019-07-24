@@ -20,17 +20,17 @@ def main():
     for pin in total_pin:
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, GPIO.HIGH)
-        sleep(0.50)
         GPIO.output(pin, GPIO.LOW)
     colors = ["", "", "", ""]
+    repo_number = 0
     while True:
-        repo_number = 0
         for repo_id in repo_ids:
             for GPIO_map in GPIO_maps:
                 repo_number += 1
                 if repo_number == 4:
                     repo_number = 0
                 build_status = ta.get_build_repo_status(repo_id)
+                print(build_status)
                 if build_status == 0 and colors[repo_number] != "green":
                     colors[repo_number] = "green"
                     GPIO.output(GPIO_map[0], GPIO.HIGH)
@@ -46,5 +46,6 @@ def main():
                     GPIO.output(GPIO_map[0], GPIO.LOW)
                     GPIO.output(GPIO_map[1], GPIO.HIGH)
                     GPIO.output(GPIO_map[2], GPIO.LOW)
+                sleep(3)
 
 main()
