@@ -38,16 +38,16 @@ def main():
                     GPIO.output(GPIO_map2[0], GPIO.HIGH)
                     GPIO.output(GPIO_map2[1], GPIO.LOW)
                     GPIO.output(GPIO_map2[2], GPIO.LOW)
-                elif build_status == 1 and colors[repo_number] != "red":
-                    colors[repo_number] = "red"
-                    GPIO.output(GPIO_map2[0], GPIO.LOW)
-                    GPIO.output(GPIO_map2[1], GPIO.LOW)
-                    GPIO.output(GPIO_map2[2], GPIO.HIGH)
                 elif build_status == None and colors[repo_number] != "yellow":
                     colors[repo_number] = "yellow"
                     GPIO.output(GPIO_map2[0], GPIO.LOW)
                     GPIO.output(GPIO_map2[1], GPIO.HIGH)
                     GPIO.output(GPIO_map2[2], GPIO.LOW)
+                else:
+                    colors[repo_number] = "red"
+                    GPIO.output(GPIO_map2[0], GPIO.LOW)
+                    GPIO.output(GPIO_map2[1], GPIO.LOW)
+                    GPIO.output(GPIO_map2[2], GPIO.HIGH)
                 sleep(1)
 
 main()
